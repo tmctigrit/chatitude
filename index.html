@@ -7,9 +7,61 @@
    
 </head>
 <body>
-	<div class='chat'></div>
-	 <script type="text/javascript">
+	<div class='signup'>
+		<form method='post' name='signup'>
+			<input type='text' id='username' name='username' placeholder='Enter username'/>
+			<input type='password' id='password' name='password' placeholder='Enter password'/>
+			<button type='submit' value='Submit' id='button'>Signup</button>
+		</form>
+	</div>
+
+	<div class='chats'>
+
+	 </div>
+	 <script id='signup-template' type="text/x-handlebars-template">
+	 	<div class='signupchats'></div>
+	 </script>
+	 <script id='signin-template' type="text/x-handlebars-template">
+	 	<div class='signinchats'></div>
+	 </script>
+
+	 <script id='getchats-template' type="text/x-handlebars-template">
+	 	<div>
+	 		<p>{{user}} says: {{message}} at {{time}}</p>
+	 	</div>
+	 </script>
+	 <script id='postchats-template' type="text/x-handlebars-template">
+	 	<div class='postchats'></div>
+	 </script>
+
+	 <script>
+	 	var source = $('#getchats-template').html();
+	 	var template = Handlebars.compile(source);
+
+	 	var url = "http://chat.api.mks.io"
+
+	 	$.get(url + "/chats", function (chats) {
+	 		chats.forEach(function (chat){
+	 			var chatHtml = template(chat)
+	 			$('.chats').append(chatHtml)
+	 		})
+	 	})
+
+	 	$(document).on('click', '#button', function (e) {
+	 		e.preventDefault()
+
+	 	var username = $('#username').val();
+	 	var password = $('#password').val();
+	 	$.ajax( {
+	 		type: "POST",
+	 		url: url + "/signup",
+	 		data: { username: username, password: password}
+	 	})
+	 })
+	 	
+
+
 
 	 </script>
-	</div>
+	 
 </body>
