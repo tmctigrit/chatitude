@@ -14,6 +14,19 @@
 			<button type='submit' value='Submit' id='button'>Signup</button>
 		</form>
 	</div>
+	<div class='signin'>
+		<form method='post' name='signin'>
+			<input type='text' id='logusername' name='logusername' placeholder='Enter username'/>
+			<input type='password' id='logpassword' name='logpassword' placeholder='Enter password'/>
+			<button type='submit' value='Submit' id='logbutton'>Signin</button>
+		</form>
+	</div>
+	<div class='postchat'>
+		<form method='post' name='postchat'>
+			<textarea id='message'/></textarea>
+			<button id='postchat'>POST!</button>
+		</form>
+	</div>
 
 	<div class='chats'>
 
@@ -50,14 +63,47 @@
 	 	$(document).on('click', '#button', function (e) {
 	 		e.preventDefault()
 
-	 	var username = $('#username').val();
-	 	var password = $('#password').val();
-	 	$.ajax( {
-	 		type: "POST",
-	 		url: url + "/signup",
-	 		data: { username: username, password: password}
+		 	var username = $('#username').val();
+		 	var password = $('#password').val();
+		 	$.ajax( {
+		 		type: "POST",
+		 		url: url + "/signup",
+		 		data: { username: username, password: password}
+		 	})
 	 	})
-	 })
+
+	 	$(document).on('click', '#logbutton', function (e) {
+	 		e.preventDefault()
+	 		var logusername = $('#logusername').val();
+		 	var logpassword = $('#logpassword').val();
+		 	$.ajax( {
+		 		type: "POST",
+		 		url: url + "/signin",
+		 		data: { username: logusername, password: logpassword}
+
+		 	}).done(function (data) {
+		 		console.log('done');
+		 		console.log(data);
+		 		var apiToken = data;
+		 		console.log(apiToken);
+		 	})
+		 	// var apiToken = window.localStorage;
+		 	// console.log(data);
+
+
+	 	})
+	 	$(document).on('click', '#postchat', function (e) {
+	 		e.preventDefault;
+	 		var message = $('#message').val();
+
+	 		$.ajax( {
+	 			type: "POST",
+	 			url: url + "/chats",
+	 			data: { apiToken: apiToken, message: message}
+	 		}).done(function (data) {
+	 			console.log(data);
+	 		});
+	 	})
 	 	
 
 
