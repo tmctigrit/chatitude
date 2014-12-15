@@ -1,19 +1,22 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <head>
-    <title>My jQuery Page</title>
+  <title>My jQuery Page</title>
     <script src="jquery-2.1.1.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
-   
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js">
+    </script>
 </head>
+
 <body>
-	<div class='signup'>
+
+  <div class='signup'>
 		<form method='post' name='signup'>
 			<input type='text' id='username' name='username' placeholder='Enter username'/>
 			<input type='password' id='password' name='password' placeholder='Enter password'/>
 			<button type='submit' value='Submit' id='button'>Signup</button>
 		</form>
 	</div>
+
 	<div class='signin'>
 		<form method='post' name='signin'>
 			<input type='text' id='logusername' name='logusername' placeholder='Enter username'/>
@@ -21,6 +24,7 @@
 			<button type='submit' value='Submit' id='logbutton'>Signin</button>
 		</form>
 	</div>
+
 	<div class='postchat'>
 		<form method='post' name='postchat'>
 			<!-- <textarea id='message'></textarea> -->
@@ -30,29 +34,30 @@
 	</div>
 
 	<div class='chats'>
+	</div>
 
-	 </div>
-	 <script id='signup-template' type="text/x-handlebars-template">
-	 	<div class='signupchats'></div>
-	 </script>
-	 <script id='signin-template' type="text/x-handlebars-template">
-	 	<div class='signinchats'></div>
-	 </script>
+	<script id='signup-template' type="text/x-handlebars-template">
+	  <div class='signupchats'></div>
+	</script>
 
-	 <script id='getchats-template' type="text/x-handlebars-template">
-	 	<div>
-	 		<p>{{user}} says: {{message}} at {{time}}</p>
+  <script id='signin-template' type="text/x-handlebars-template">
+	  <div class='signinchats'></div>
+	</script>
+
+	<script id='getchats-template' type="text/x-handlebars-template">
+	  <div>
+	 	  <p>{{user}} says: {{message}} at {{time}}</p>
 	 	</div>
-	 </script>
-	 <script id='postchats-template' type="text/x-handlebars-template">
-	 	<div class='postchats'></div>
-	 </script>
+	</script>
 
-	 <script>
-	 	var source = $('#getchats-template').html();
+  <script id='postchats-template' type="text/x-handlebars-template">
+	  <div class='postchats'></div>
+	</script>
+
+	<script>
+	  var source = $('#getchats-template').html();
 	 	var template = Handlebars.compile(source);
-
-	 	var url = "http://chat.api.mks.io"
+    var url = "http://chat.api.mks.io";
 
 	 	$.get(url + "/chats", function (chats) {
 	 		chats.forEach(function (chat){
@@ -66,6 +71,7 @@
 
 		 	var username = $('#username').val();
 		 	var password = $('#password').val();
+
 		 	$.ajax( {
 		 		type: "POST",
 		 		url: url + "/signup",
@@ -77,7 +83,8 @@
 	 		e.preventDefault()
 	 		var logusername = $('#logusername').val();
 		 	var logpassword = $('#logpassword').val();
-		 	$.ajax( {
+
+       $.ajax( {
 		 		type: "POST",
 		 		url: url + "/signin",
 		 		data: { username: logusername, password: logpassword}
@@ -89,9 +96,8 @@
 		 	})
 		 	// var apiToken = window.localStorage;
 		 	// console.log(data);
+     })
 
-
-	 	})
 	 	$(document).on('click', '#postchatbutton', function (e) {
 	 		e.preventDefault;
 	 		var message = $('#message').val();
@@ -107,10 +113,10 @@
 	 			console.log(message);
 	 		});
 	 	})
-	 	
+
 
 
 
 	 </script>
-	 
+
 </body>
