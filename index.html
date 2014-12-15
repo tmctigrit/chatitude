@@ -85,8 +85,7 @@
 		 	}).done(function (data) {
 		 		console.log('done');
 		 		console.log(data);
-		 		var apiToken = data.apiToken;
-		 		console.log(apiToken);
+		 		localStorage['apiToken'] = data.apiToken;
 		 	})
 		 	// var apiToken = window.localStorage;
 		 	// console.log(data);
@@ -100,9 +99,9 @@
 	 		$.ajax( {
 	 			type: "POST",
 	 			url: url + "/chats",
-	 			data: { apiToken: apiToken, message: message}
+	 			data: { apiToken: localStorage['apiToken'], message: message}
 	 		}).done(function (data) {
-	 			console.log('done')
+	 			console.log('done');
 	 			console.log(data);
 	 			console.log(apiToken);
 	 			console.log(message);
