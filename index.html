@@ -23,8 +23,9 @@
 	</div>
 	<div class='postchat'>
 		<form method='post' name='postchat'>
-			<textarea id='message'/></textarea>
-			<button id='postchat'>POST!</button>
+			<!-- <textarea id='message'></textarea> -->
+			<input type='text' id='message'/>
+			<button type='submit' value='submit' id='postchatbutton'>POST!</button>
 		</form>
 	</div>
 
@@ -84,7 +85,7 @@
 		 	}).done(function (data) {
 		 		console.log('done');
 		 		console.log(data);
-		 		var apiToken = data;
+		 		var apiToken = data.apiToken;
 		 		console.log(apiToken);
 		 	})
 		 	// var apiToken = window.localStorage;
@@ -92,7 +93,7 @@
 
 
 	 	})
-	 	$(document).on('click', '#postchat', function (e) {
+	 	$(document).on('click', '#postchatbutton', function (e) {
 	 		e.preventDefault;
 	 		var message = $('#message').val();
 
@@ -101,7 +102,10 @@
 	 			url: url + "/chats",
 	 			data: { apiToken: apiToken, message: message}
 	 		}).done(function (data) {
+	 			console.log('done')
 	 			console.log(data);
+	 			console.log(apiToken);
+	 			console.log(message);
 	 		});
 	 	})
 	 	
