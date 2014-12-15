@@ -1,0 +1,65 @@
+<head>
+  <!--<meta http-equiv="refresh" content="10">-->
+  <a href="index.html">Back To Chatitude Homepage</a>
+  <title>Chatitude</title>
+  <script src="jquery-2.1.1.js"></script>
+  <script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+  <form method="get" name="chatview">
+    <h4>Chat View</h4>
+    </br></br>New Post:&nbsp;
+    <input type="text" id="message" value=""></input>
+    <button type="button" id="button">Post Message</button>
+    </br></br>
+  </form>
+</body>
+
+<script type="text/javascript">
+   $.ajax({
+     type: 'GET',
+     url: 'http://chat.api.mks.io/chats'
+   }).success(function (chats) {
+
+     console.log("Got chats:", chats);
+     var chatsText = JSON.stringify(chats);
+     var objChats = JSON.parse(chatsText);
+     console.log(objChats);
+
+     var source = $("#blog-post-template").html();
+     var template = Handlebars.compile(source);
+     for (n=0; n<objChats.length; n++) {
+        var myNewHTML = template({
+          title: "User: " + objChats[n].user,
+          content: "Post: " + objChats[n].message
+        });
+
+       // Step 4: Append it to the DOM
+       $('body').append(myNewHTML);
+     }
+
+   })
+
+  $("#button").click(function (data){
+    var myMessage = $("#message").val();
+    //console.log("message: " + myMessage);
+    var apiToken = window.location.search.substr(1);
+    var apiTokenArray = apiToken.split("=");
+    //console.log("got it: " + apiTokenArray[1]);
+
+    httpString = 'http://chat.api.mks.io/chats?apiToken=' + apiTokenArray[1] + '&message=' + myMessage + '';
+    console.log(httpString);
+    $.post(httpString, function(data) {
+
+    })
+  })
+
+
+</script>
+
+<script id="blog-post-template" type="text/x-handlebars-template">
+   <div class="blog-post">
+     <b>{{ title }}</b>&nbsp;&nbsp;&nbsp;{{ content }}</p>
+   </div>
+</script>
