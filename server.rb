@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
+require 'json'
 
 set :bind, '0.0.0.0'
 
@@ -15,7 +16,7 @@ post '/signup' do
   username = params['username']
   password = params['password']
 
-  db = Chatitude.create_db_connection('chatitude')  
+  db = Chatitude.create_db_connection('chatitude')
   Chatitude::UsersRepo.save(db, {
     :username => username,
     :password => password
