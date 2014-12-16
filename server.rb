@@ -12,7 +12,7 @@ get '/' do
 end
 
 post '/signup' do
-  # params = JSON.parse request.body.read
+  headers['Content-Type'] = 'application/json'
   username = params['username']
   password = params['password']
 
@@ -21,10 +21,27 @@ post '/signup' do
     :username => username,
     :password => password
   })
-  redirect to '/'
+
 end
 
 post '/signin' do
+  headers['Content-Type'] = 'application/json'
+  username = params['logusername']
+  password = params['logpassword']
+
+  db = Chatitude.create_db_connection('chatitude')
+  user = Chatitude::UsersRepo.find_by_name(db, username)
+  if user
+    if password == user['password']
+      user['token'] = SecureRandom.base64
+    else
+      status 401
+    end
+  else
+    status 401
+  end
+
+  JSON.generate(user)
 
 end
 
