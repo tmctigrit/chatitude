@@ -12,7 +12,7 @@ get '/' do
 end
 
 post '/signup' do
-  params = JSON.parse request.body.read
+  # params = JSON.parse request.body.read
   username = params['username']
   password = params['password']
 
@@ -21,6 +21,7 @@ post '/signup' do
     :username => username,
     :password => password
   })
+  redirect to '/'
 end
 
 post '/signin' do
