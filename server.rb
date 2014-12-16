@@ -53,3 +53,11 @@ post '/chats' do
 
 end
 
+# $.ajax(function(){
+#   url: '/signin',
+#   method: 'post',
+#   success: function(user){
+#     console.log(user.apitoken);
+#   }
+# })
+
