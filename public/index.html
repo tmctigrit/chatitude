@@ -18,7 +18,7 @@
 	</div>
 
 	<div class='signin'>
-		<form method='post' name='signin'>
+		<form name='signin'>
 			<input type='text' id='logusername' name='logusername' placeholder='Enter username'/>
 			<input type='password' id='logpassword' name='logpassword' placeholder='Enter password'/>
 			<button type='submit' value='Submit' id='logbutton'>Signin</button>
@@ -46,7 +46,7 @@
 
 	<script id='getchats-template' type="text/x-handlebars-template">
 	  <div>
-	 	  <p>{{user}} says: {{message}} at {{time}}</p>
+	 	  <p>{{user_id}} says: {{content}}</p>
 	 	</div>
 	</script>
 
@@ -57,9 +57,8 @@
 	<script>
 	  var source = $('#getchats-template').html();
 	 	var template = Handlebars.compile(source);
-    var url = "http://chat.api.mks.io";
 
-	 	$.get(url + "/chats", function (chats) {
+	 	$.get("/chats", function (chats) {
 	 		chats.forEach(function (chat){
 	 			var chatHtml = template(chat)
 	 			$('.chats').append(chatHtml)
@@ -87,13 +86,12 @@
 
        $.ajax( {
 		 		type: "POST",
-		 		url: url + "/signin",
+		 		url: "/signin",
 		 		data: { username: logusername, password: logpassword}
 
 		 	}).done(function (data) {
 		 		console.log('done');
 		 		console.log(data);
-		 		localStorage['apiToken'] = data.apiToken;
 		 	})
 		 	// var apiToken = window.localStorage;
 		 	// console.log(data);

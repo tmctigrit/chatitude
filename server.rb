@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
 require 'json'
+require 'pry-byebug'
 
 set :bind, '0.0.0.0'
 
@@ -31,27 +32,24 @@ post '/signup' do
 end
 
 post '/signin' do
-  headers['Content-Type'] = 'application/json'
-  username = params['logusername']
-  password = params['logpassword']
 
+  headers['Content-Type'] = 'application/json'
+  username = params['username']
+ password = params['password']
+# binding.pry
   db = Chatitude.create_db_connection('chatitude')
   user = Chatitude::UsersRepo.find_by_name(db, username)
-  if user
-    if password == user['password']
-      user['token'] = SecureRandom.base64
-    else
-      status 401
-    end
-  else
-    status 401
+  if user && password == user['password']
+    Chatitude::UsersRepo.generate_api(db, user['id'])
+    JSON.generate(user)
   end
-
-  JSON.generate(user)
-
 end
 
 get '/chats' do
+  headers['Content-Type'] = 'application/json'
+  db = Chatitude.create_db_connection('chatitude')
+  chats = Chatitude::ChatsRepo.all(db)
+  JSON.generate(chats)
 
 end
 
