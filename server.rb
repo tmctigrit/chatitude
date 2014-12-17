@@ -13,14 +13,20 @@ end
 
 post '/signup' do
   headers['Content-Type'] = 'application/json'
+  
+  puts params
+
+
   username = params['username']
   password = params['password']
+
 
   db = Chatitude.create_db_connection('chatitude')
   Chatitude::UsersRepo.save(db, {
     :username => username,
     :password => password
   })
+  JSON.generate(params)
 
 end
 
