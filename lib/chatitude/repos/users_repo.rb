@@ -24,5 +24,15 @@ module Chatitude
       result = db.exec(sql, [user_data[:username], user_data[:password]])
       result.first
     end
+
+    #generate a unique api token for user
+    def self.generate_api db, user_id
+      utoken = SecureRandom.base64
+      sql = %q[INSERT INTO tokens (user_id, tokenid) VALUES ($1, $2) RETURNING *]
+      result = db.exec(sql, [user_id, utoken])
+      result.first
+    end
+
+
   end
 end

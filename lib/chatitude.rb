@@ -28,6 +28,11 @@ module Chatitude
         content VARCHAR,
         user_id INT references users(id)
       );
+      CREATE TABLE IF NOT EXISTS tokens(
+        id SERIAL PRIMARY KEY,
+        user_id INT references users(id),
+        tokenid VARCHAR
+      );
     SQL
   end
 
